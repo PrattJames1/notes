@@ -1,0 +1,155 @@
+// Creating a virtual environment:
+
+	1. Go into the folder of your project.
+	2. To create a new virtual environment, type in virtualenv 11_env
+	(this is if you have virtual environment installed, via pip)
+	3. Activate it. Type in source 11_env/bin/activate 
+	4. To stop it, enter deactivate. 
+
+
+// Creating a project in Django:
+
+	1. Make sure Django is installed. Type: pip install Django
+	2. Tell Django to create a new project. Type: django-admin.py
+	startproject learning_log . (don't forget the dot!)
+	3. Create a database. Type: python manage.py migrate
+	(migrate means that we are modifying the database.)
+	4. Make sure Django has set up the project properly. Type:
+	python manage.py runserver
+
+
+// Creating applications for this Django project:
+
+	1. First, make sure the server is running (see the last step
+	in "Creating a project in Django")
+	2. Open a new terminal tab and locate your project directory.
+	Then activate it (3rd step in "Creating a virtual env.")
+	3. Start an application in your project by typing:
+	python manage.py startapp learning_logs
+		-The command "startapp APPNAME" tells Django to create the
+		infrastructure needed to build an application.
+
+
+// Adding models to your applications:
+
+	1. Open your models.py file that is in your project directory.
+	2. Replace the pound sign text with your models.
+	3. There are many different "fields" for each attribute in
+	a model. For example, there is CharField which lets users
+	store small amounts of text. Another example is DateTimeField
+	which records a date and time. For more fields, see here:
+	https://docs.djangoproject.com/en/1.8/ref/models/fields/
+	4. When writing a CharField, you need to tell Django which
+	attribute to use by default when it displays info about a 
+	topic. So you'd use __str__() , which displays a simple
+	representation of a model. The following code returns the
+	string stored in the text attribute:
+
+		from django.db import models
+
+		class Topic(models.Model):
+			'''A topic the user is learning about'''
+			text = models.CharField(max_length=200)
+			date_added = models.DateTimeField(auto_now_add=True)
+
+			def __str__(self):
+				'''Return a string representation of model'''
+				return self.text
+
+	5. Now that you have created your models, you need to tell
+	Django to include the app in the overall project. So, open
+	settings.py in the learning_log/learning_log directory.
+	6. Add your newly created application under the INSTALLED_APPS
+	tuple: 
+
+		# My apps
+		'learning_logs',
+
+	7. Once it is added to your settings, tell Django to modify
+	the database so it can store info related to the model Topic.
+	So from your activated virtual environment in your project
+	directory, type in: python manage.py makemigrations learning_logs
+	8. Now, apply the migration by typing: python manage.py migrate 
+	9. So to put it simple, follow these three steps whenever 
+	you want to modify the data that Learning Log manages:
+		-modify models.py
+		-call makemigrations on learning_logs
+		-tell Django to migrate the project.
+
+
+// Setting up admins for your site (superusers):
+
+	1. To create a superuser in Django, go into your virtual 
+	environment and type: python manage.py createsuperuser
+	2. Django will request a username for the admin (superuser),
+	so type in whatever admin username you want. Then you'll
+	enter an email address (optional), and then you'll need
+	to enter a password twice.
+
+
+// Registering a model with the admin site:
+
+	1. All the models you create need to be registered manually,
+	unlike some of the default models that are installed. To
+	do this, go to admin.py (in same directory as models.py)
+	and type in:
+
+		from learning_logs.models import Topic
+
+		admin.site.register(Topic)
+	2. Now your models are registered in the admin site.
+	To view your site and log in to your admin account, URL:
+	http://localhost:8000/admin/
+	3. Make sure to migrate all changes. (Step 7 in Adding Models
+	to your applications)
+
+
+// Editing entry models that the user inputs:
+
+	1. So now you can add topics, but now we want to add
+	what we've been learning about said topics. To do
+	this, add code for the Entry model in models.py:
+
+		class Entry(models.Model):
+			'''Something specific learned about a topic'''
+			topic = models.ForeignKey(Topic)
+			text = models.TextField()
+			date_added = models.DateTimeField(auto_now_add=True)
+
+			class Meta:
+				verbose_name_plural = 'entries'
+
+				def __str__(self):
+					'''Return a string represenation of the model.'''
+					return self.text[:50] + "..."
+
+	2. A little information about the code above:
+		-ForeignKey is a database term. It basically connects
+		your entry with your topic.
+		-There is no limit for TextField this time, because
+		you don't want to limit the size of individual entries.
+		-The date_added attribute basically shows the order each
+		entry was created, and places a timestamp next to them.
+		-A Meta class holds extra info for managing a model. So
+		for here it basically tells Django to use the word
+		'entries' instead of 'entry', when referring to multiple
+		entries. (Without this, Django would refer to multiple
+		entries as "entrys")
+		-Finally, the __str___() method tells Django to show
+		just the first 50 characters of the text.
+	3. Now that you've modified models.py, make sure to migrate 
+	the database. (step 7 in "Adding models to your apps")
+	4. Remember that once you migrate, register your new model
+	(Entry) into your admin.py file:
+
+		from learning_logs.models import Topic, Entry
+
+		admin.site.register(Entry)
+	5. Now your new model is in your site!
+
+
+
+
+
+
+
