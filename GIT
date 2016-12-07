@@ -1,0 +1,49 @@
+// Some notes on git:
+
+
+     How to initialize a Git Repository:
+     
+          1. Change your directory so you're inside the one you want
+          to post to GitHub.
+          
+          2. Use (git init) to initialize the repository.
+          
+          3. Type in (git status) to see what Git sees when your new 
+          repository is initialized. 
+          
+          4. Type in (git add . (the . means your current directory))
+          to tell Git to track any changes you make the the files. 
+          
+          5. Now that Git is tracking them, you can commit them to 
+          store this specific snapshot of your project. In this case,
+          you'd use (git commit -m "Initial commit").
+          
+          6. Go to GitHub and create a new repository. Make sure to
+          give it a name and description.
+          
+          7. Because you have an existing repository, add the GitHub
+          repository as a "remote" to your local Git repository. In 
+          this case, you'd use (git remote add origin ADDRESS). A
+          "remote" is a copy of your local repository which will be 
+          held in the GitHub's servers. In this case, the remote is
+          called origin. 
+          
+          8. To send changes to the remote repository, use (git push
+          origin master). 
+          
+          9. To check to see if your code matches up with the code on
+          GitHub - or is up to date, basically - type in (git pull
+          origin master).
+
+
+     You should be able to:
+     
+          - Create (initialize) a new Git repository
+          
+          - Save (add and commit) files to a repository.
+          
+          - Create a repository on GitHub for your project.
+          
+          - Push your commits to the GitHub repository.
+          
+          - Recover lost work from GitHub. 
