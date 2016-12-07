@@ -1,0 +1,81 @@
+// Mapping URLs
+
+	1. In the main learning_log project folder, open the file 
+	urls.py
+	2. To include URLs for a specific application (learning_logs),
+	add it under urlpatterns in urls.py in your project folder:
+
+		url(r'', include('learning_logs.urls', namespace='learning_logs')),'
+
+	3. Now you need to actually create a learning_logs.urls 
+	file. Go into learning_log/learning_logs and create urls.py
+	4. Inside urls.py, import the url function from django,
+	import the views module, the different urlpatterns that
+	can be requested from the learning_logs app, and the 
+	actual URL pattern:
+
+		''' Defines URL patterns for learning_logs.'''
+
+		from django.conf.urls import url 
+
+		from . import views 
+
+		urlpatterns = [ 
+			# Home page 
+			url(r'^$', views.index, name ='index'),
+		]
+
+	5. The last bit looks a little funky! It takes three 
+	arguments:
+		- r'^$' is a regular expression. It defines a specific
+		pattern that Django can look for in a URL. The 'r'
+		means raw string, and the quotes tell Python where
+		the regular expression begins and ends. The '^' tells
+		Python to find the beginning of the string, and the
+		'$' tells Python to find the end of the string. 
+		Basically, this expression tells Python to look for a
+		URL with nothing between the beginning / end of URL. 
+		- The second argument specifies which view function 
+		to call. 
+		- The third argument provides the name for the URL
+		pattern so you can refer to it in other sections of
+		the code. 
+
+
+// Writing a view
+
+	1. Open up views.py in your learning_logs directory.
+		- views.py was created when you typed python manage.py
+		startapp 
+	2. This is how the view for the home page should be written:
+
+		def index(request):
+			'''The home page for Learning Log'''
+			return render(request, 'learning_logs/index.html')
+
+	3. Some notes on the above code:
+		- When a URL matches the above pattern, Django will 
+		look for a function called index() in the views.py file.
+		- render() builds the page, and it takes two arguments:
+		the original request object and a template it can use
+		to build the page. Now we'll write the template.
+
+
+// Writing a template
+
+	1. Create a folder in your learning_logs directory called
+	templates. Then create a folder inside of templates and 
+	call it learning_logs. Then create a new file called index.html 
+	2. Write your front-end code into index.html! Something like:
+
+		<p>Learning Log</p>
+
+		<p>Learning Log helps you keep track of your learning, for
+		any topic you're learning about.</p>
+
+
+
+
+
+
+
