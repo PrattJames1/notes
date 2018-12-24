@@ -34,6 +34,10 @@
           9. To check to see if your code matches up with the code on
           GitHub - or is up to date, basically - type in (git pull
           origin master).
+          
+          10. Use (vi .gitignore) to exclude certain files. To insert,
+          press i. Then write what you want to exclude, separated by
+          line breaks. When done, press esc, then write (:wq) to quit.
 
 
      You should be able to:
